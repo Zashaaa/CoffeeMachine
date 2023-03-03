@@ -62,8 +62,10 @@ def handle_order(coffee_order, price):
         make_coffee(coffee_order)
         change = money_inserted - price
         print(f"Your change is {change}")
-        # TODO: Append money to existing money in resources
-        resources["money"] = price
+        if "money" in resources:
+            resources["money"] += price
+        else:
+            resources["money"] = price
         print(f"Please enjoy your {coffee_order}")
     else:
         print("Not enough money inserted.")
