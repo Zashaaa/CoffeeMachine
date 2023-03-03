@@ -90,6 +90,8 @@ def coffee_machine():
     if order == "report":
         print_report()
         coffee_machine()
+    elif order == "stop" or order == "exit":
+        return
     else:
         enough_resources = check_resources(order)
         if enough_resources:
