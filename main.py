@@ -32,9 +32,11 @@ resources = {
 
 
 def print_report():
-    print(f"Water: {resources['water']}ml")
-    print(f"Milk: {resources['milk']}ml")
-    print(f"Coffee: {resources['coffee']}gr")
+    for resource in resources:
+        print(f"{resource.title()}: {resources[resource]}")
+        # TODO: print juiste eenheid
+        # print(f"Milk: {resources['milk']}ml")
+        # print(f"Coffee: {resources['coffee']}gr")
 
 
 def check_resources(coffee_order):
@@ -47,6 +49,24 @@ def check_resources(coffee_order):
             return False
     print("Ok")
     return True
+
+
+def handle_order(coffee_order, price):
+    print(f"{coffee_order.title()} costs {price}. Please insert money")
+    quarters = int(input("How many quarters? "))
+    dimes = int(input("How many dimes? "))
+    nickles = int(input("How many quarters? "))
+    pennys = int(input("How many penny's? "))
+    money_inserted = (quarters * 0.25) + (dimes * 0.1) + (nickles * 0.05) + (pennys * 0.01)
+    if money_inserted >= price:
+        make_coffee(coffee_order)
+        change = money_inserted - price
+        print(f"Your change is {change}")
+        resources["money"] = price
+        print(f"Please enjoy your {coffee_order}")
+    else:
+        print("Not enough money inserted.")
+        print(f"${money_inserted} is being refunded")
 
 
 def make_coffee(coffee_order):
@@ -64,21 +84,10 @@ def coffee_machine():
     else:
         enough_resources = check_resources(order)
         if enough_resources:
-            make_coffee(order)
+            handle_order(order, menu[order]["cost"])
             coffee_machine()
         else:
             coffee_machine()
 
 
 coffee_machine()
-
-
-# TODO 1: Print resources report
-# TODO 2: get order
-## TODO 2a: check resources per order
-### TODO 2a1 Fail en report when resources not enough
-### TODO 2a2 Ask for money to insert when enough
-# TODO 3: make coffee
-# TODO 4: refund 2 much paid money
-# TODO 5: decrease resources
-# TODO 6: add money
