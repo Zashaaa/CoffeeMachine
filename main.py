@@ -33,10 +33,16 @@ resources = {
 
 def print_report():
     for resource in resources:
-        print(f"{resource.title()}: {resources[resource]}")
-        # TODO: print juiste eenheid
-        # print(f"Milk: {resources['milk']}ml")
-        # print(f"Coffee: {resources['coffee']}gr")
+        if resource == "water" or resource == 'milk':
+            unit = "ml"
+            sign = ""
+        elif resource == "coffee":
+            unit = "mg"
+            sign = ""
+        elif resource == "money":
+            unit = ""
+            sign = "$"
+        print(f"{resource.title()}: {sign}{resources[resource]}{unit}")
 
 
 def check_resources(coffee_order):
@@ -57,11 +63,11 @@ def handle_order(coffee_order, price):
     dimes = int(input("How many dimes? "))
     nickles = int(input("How many quarters? "))
     pennys = int(input("How many penny's? "))
-    money_inserted = (quarters * 0.25) + (dimes * 0.1) + (nickles * 0.05) + (pennys * 0.01)
+    money_inserted = round((quarters * 0.25) + (dimes * 0.1) + (nickles * 0.05) + (pennys * 0.01),2)
     if money_inserted >= price:
         make_coffee(coffee_order)
         change = money_inserted - price
-        print(f"Your change is {change}")
+        print(f"Your change is ${change}")
         if "money" in resources:
             resources["money"] += price
         else:
