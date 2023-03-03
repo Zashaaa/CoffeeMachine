@@ -39,7 +39,7 @@ def print_report():
         elif resource == "coffee":
             unit = "mg"
             sign = ""
-        elif resource == "money":
+        else:
             unit = ""
             sign = "$"
         print(f"{resource.title()}: {sign}{resources[resource]}{unit}")
